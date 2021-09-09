@@ -218,6 +218,7 @@ public class SugorokuAnswer5 {
 					System.out.println("ゲームを終了します");
 					break;
 				} else {
+					count = 0;
 					SugorokuAnswer5.main(args);
 				}
 			}
