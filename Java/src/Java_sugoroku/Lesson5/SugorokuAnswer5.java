@@ -101,41 +101,62 @@ public class SugorokuAnswer5 {
 	 */
 	public static void main(String[] args) {
 
-		try {
-			System.out.printf("参加するプレイヤーの人数を入力してください:");
+		// SugorokuAnswerクラスのインスタンス九を生成
+		SugorokuAnswer5 sugo = new SugorokuAnswer5();
 
-			// 入力された文字データを変換する橋渡し
-			InputStreamReader isr = new InputStreamReader(System.in);
-			// 文字データをバッファリング
-			BufferedReader br = new BufferedReader(isr);
+		// すごろくゲームのループ
+		while (true) { // 条件が一致するまでループ
 
-			// キーボード入力を受け付ける。参加する人数を入れる
-			String input = br.readLine();
-			// 入力された文字列を数値に変換して代入
-			int playerNum = Integer.parseInt(input);
+			try {
+				System.out.printf("参加するプレイヤーの人数を入力してください:");
 
-			// SugorokuAnswerクラスのインスタンスの生成
-			SugorokuAnswer5 sugo = new SugorokuAnswer5();
+				// 入力された文字データを変換する橋渡し
+				InputStreamReader isr = new InputStreamReader(System.in);
+				// 文字データをバッファリング
+				BufferedReader br = new BufferedReader(isr);
 
-			//
-			for (int i = 0; i < playerNum; i++) { // 参加人数の回数ループ
-				// PlayerListの中に番号「i+1」のPlayerインスタンスを生成して入れる
-				sugo.playerList.add(new Player(String.valueOf(i + 1)));
-			}
+				// キーボード入力を受け付ける。参加する人数を入れる
+				String input = br.readLine();
+				// 入力された文字列を数値に変換して代入
+				int playerNum = Integer.parseInt(input);
 
-			System.out.printf("ゴールまでのマスの数:");
-			// キーボード入力を受け付ける。ゴールまでのマスの数を入力
-			input = br.readLine();
-			// 入力された文字列を数値に変換して変数GOALに代入
-			sugo.GOAL = Integer.parseInt(input);
-			System.out.println(""); // 改行
+				// 入力された数値分インスタンスを生成
+				for (int i = 0; i < playerNum; i++) { // 参加人数の回数ループ
+					// PlayerListの中に番号「i+1」のPlayerインスタンスを生成して入れる
+					sugo.playerList.add(new Player(String.valueOf(i + 1)));
+				}
 
-			// ローカル変数
-			int isEnd = 0;
-			int num = 0;
+				System.out.printf("ゴールまでのマスの数:");
+				// キーボード入力を受け付ける。ゴールまでのマスの数を入力
+				input = br.readLine();
+				// 入力された文字列を数値に変換して変数GOALに代入
+				sugo.GOAL = Integer.parseInt(input);
+				System.out.println(""); // 改行
 
-			// すごろくゲームのループ
-			while (true) { // 条件が一致するまでループ
+				// ローカル変数
+				int num = 0;
+
+				// サイコロを振る個数を決定
+				while (true) { // 条件が一致するまでループ
+					System.out.println("サイコロを振る個数を入力してください");
+					// キーボード入力を受け付ける
+					String str = br.readLine();
+
+					if (str.equals("")) {
+						System.out.println("数字を入力してください");
+						continue;
+					} else if (str.matches("[a-zA-Z]")) {
+						System.out.println("数字を入力してください");
+						continue;
+					} else {
+						num = Integer.parseInt(str);
+						break;
+					}
+				}
+
+				// ローカル変数
+				int isEnd = 0;
+
 				while (isEnd == 0 && !input.equals("q")) { // 条件が一致するまでループ
 
 					// 変数countが10だった場合、isEndに1を代入してループを終了させる
@@ -146,24 +167,6 @@ public class SugorokuAnswer5 {
 					}
 
 					for (int i = 0; i < playerNum; i++) { // 参加人数の数だけループ
-						System.out.println(sugo.playerList.get(i).getName() + " のサイコロを振る個数を入力してください");
-
-						// サイコロを振る個数を決定
-						while (true) { // 条件が一致するまでループ
-							// キーボード入力を受け付ける
-							String str = br.readLine();
-
-							if (str.equals("")) { // もし空文字なら再入力
-								System.out.println("数字を入力してください");
-								continue;
-							} else if (str.matches("[a-zA-Z]")) { // アルファベットなら再入力
-								System.out.println("数字を入力してください");
-								continue;
-							} else { // 数字なら変換して代入し、ループを抜ける
-								num = Integer.parseInt(str);
-								break;
-							}
-						}
 						// i番目のインスタンスのフィールド変数numにsaikoroメソッドの戻り値を加算
 						sugo.playerList.get(i).addNum(sugo.saikoro(num));
 					}
@@ -214,51 +217,59 @@ public class SugorokuAnswer5 {
 						}
 					}
 				}
+
 				if (re == 1) { // reが1ならゲーム終了
 					System.out.println("ゲームを終了します");
 					break;
-				} else {
+					
+				} else { // reが2なら
+					// countを0に戻す
 					count = 0;
-					SugorokuAnswer5.main(args);
+					
+					// playerListの要素を全て削除
+					sugo.playerList.clear();
+					
+					continue;
 				}
+
+			} catch (Exception e) {
+				System.out.println("例外：" + e);
 			}
-
-			// 二重ループ。 このコードで変数numの大きい順にソート
-			for (int i = 0; i < sugo.playerList.size() - 1; i++) { // 外周ループ
-				for (int j = 0; j < sugo.playerList.size() - 1; j++) { // 内周ループ
-
-					/*
-					 * j番目のPlayerインスタンスの変数numとj+1番目の変数numを比較し、 前者の値の方が小さければif文の処理を実行
-					 */
-					if (sugo.playerList.get(j).getNum() < sugo.playerList.get(j + 1).getNum()) {
-
-						// Playerインスタンスを生成。
-						Player temp = new Player("temp");
-						// 変数tempにplayerListに格納されているj番目のPlayerインスタンスを代入
-						temp = sugo.playerList.get(j);
-
-						// playerListのj番目にj+1番目の要素を上書き
-						sugo.playerList.set(j, sugo.playerList.get(j + 1));
-
-						// playerListのj+1番目にtempに入れたj番目のインスタンスを入れる
-						sugo.playerList.set(j + 1, temp);
-						// 上記の処理によりj番目の要素とj+1番目の要素が入れ替わる
-
-					}
-				}
-			}
-
-			System.out.println("順位発表");
-
-			// 参加人数の回数ループさせて順位を表示
-			for (int i = 0; i < playerNum; i++) {
-				System.out.println((i + 1) + "位:" + sugo.playerList.get(i).getName() + ","
-						+ sugo.playerList.get(i).getNum() + "マス");
-			}
-
-		} catch (Exception e) {
-			System.out.println("例外：" + e);
 		}
+
+		// 二重ループ。 このコードで変数numの大きい順にソート
+		for (int i = 0; i < sugo.playerList.size() - 1; i++) { // 外周ループ
+			for (int j = 0; j < sugo.playerList.size() - 1; j++) { // 内周ループ
+
+				/*
+				 * j番目のPlayerインスタンスの変数numとj+1番目の変数numを比較し、 前者の値の方が小さければif文の処理を実行
+				 */
+				if (sugo.playerList.get(j).getNum() < sugo.playerList.get(j + 1).getNum()) {
+
+					// Playerインスタンスを生成。
+					Player temp = new Player("temp");
+					// 変数tempにplayerListに格納されているj番目のPlayerインスタンスを代入
+					temp = sugo.playerList.get(j);
+
+					// playerListのj番目にj+1番目の要素を上書き
+					sugo.playerList.set(j, sugo.playerList.get(j + 1));
+
+					// playerListのj+1番目にtempに入れたj番目のインスタンスを入れる
+					sugo.playerList.set(j + 1, temp);
+					// 上記の処理によりj番目の要素とj+1番目の要素が入れ替わる
+
+				}
+			}
+		}
+
+		System.out.println("順位発表");
+
+		// 参加人数の回数ループさせて順位を表示
+		for (int i = 0; i < sugo.playerList.size(); i++) {
+			System.out.println(
+					(i + 1) + "位:" + sugo.playerList.get(i).getName() + "," + sugo.playerList.get(i).getNum() + "マス");
+		}
+
 	}
 
 	/**

@@ -129,10 +129,31 @@ public class SugorokuAnswer4 {
 			// 入力された文字列を数値に変換して変数GOALに代入
 			sugo.GOAL = Integer.parseInt(input);
 			System.out.println(""); // 改行
+			
+			// ローカル変数
+			int num = 0;
+			
+			// サイコロを振る個数を決定
+			while (true) { // 条件が一致するまでループ
+				System.out.println("サイコロを振る個数を入力してください");
+				// キーボード入力を受け付ける
+				String str = br.readLine();
+
+				if (str.equals("")) {
+					System.out.println("数字を入力してください");
+					continue;
+				} else if (str.matches("[a-zA-Z]")) {
+					System.out.println("数字を入力してください");
+					continue;
+				} else {
+					num = Integer.parseInt(str);
+					break;
+				}
+			}
 
 			// ローカル変数
 			int isEnd = 0;
-			int num = 0;
+			
 
 			// ここからすごろくゲームのループ
 			while (isEnd == 0 && !input.equals("q")) { // 条件が一致するまでループ
@@ -144,25 +165,8 @@ public class SugorokuAnswer4 {
 					continue;
 				}
 
+				// サイコロを振って出た目の数分マスを進める
 				for (int i = 0; i < playerNum; i++) { // 参加人数の数だけループ
-					System.out.println(sugo.playerList.get(i).getName() + " のサイコロを振る個数を入力してください");
-
-					// サイコロを振る個数を決定
-					while (true) { // 条件が一致するまでループ
-						// キーボード入力を受け付ける
-						String str = br.readLine();
-
-						if (str.equals("")) {
-							System.out.println("数字を入力してください");
-							continue;
-						} else if (str.matches("[a-zA-Z]")) {
-							System.out.println("数字を入力してください");
-							continue;
-						} else {
-							num = Integer.parseInt(str);
-							break;
-						}
-					}
 					// i番目のインスタンスのフィールド変数numにsaikoroメソッドの戻り値を加算
 					sugo.playerList.get(i).addNum(sugo.saikoro(num));
 				}
