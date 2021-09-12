@@ -142,10 +142,7 @@ public class SugorokuAnswer5 {
 					// キーボード入力を受け付ける
 					String str = br.readLine();
 
-					if (str.equals("")) {
-						System.out.println("数字を入力してください");
-						continue;
-					} else if (str.matches("[a-zA-Z]")) {
+					if (str.equals("") || str.matches("[a-zA-Z]")) {
 						System.out.println("数字を入力してください");
 						continue;
 					} else {
@@ -193,25 +190,17 @@ public class SugorokuAnswer5 {
 					// ゲーム続行の是非を入力
 					input = br.readLine();
 
-					if (input.equals("")) { // 空文字ならループ
-						System.out.println("1 か 2 を入力してください");
-						continue;
-					} else if (input.matches("[a-zA-Z]")) { // 英文字ならループ
+					if (input.equals("") || input.matches("[a-zA-Z]")) {
 						System.out.println("1 か 2 を入力してください");
 						continue;
 					} else { // 数字ならさらに分岐
-
+						
 						// 一旦文字を数値に変換して変数reに代入
 						re = Integer.parseInt(input);
 
-						if (re == 2) { // reが2とイコールならループ終了
+						if (re == 1 || re == 2) { // reが1または2とイコールならループ終了
 							break;
-
-						} else if (re == 1) { // reが1とイコールならループ終了
-							break;
-
 						} else { // 1 or 2でなければ再ループ
-
 							System.out.println("1 か 2 を入力してください");
 							continue;
 						}
@@ -228,7 +217,6 @@ public class SugorokuAnswer5 {
 					
 					// playerListの要素を全て削除
 					sugo.playerList.clear();
-					
 					continue;
 				}
 
