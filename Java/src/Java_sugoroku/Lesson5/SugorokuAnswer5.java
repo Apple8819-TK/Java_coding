@@ -180,6 +180,38 @@ public class SugorokuAnswer5 {
 					count++;
 				}
 
+				// 二重ループ。 このコードで変数numの大きい順にソート
+				for (int i = 0; i < sugo.playerList.size() - 1; i++) { // 外周ループ
+					for (int j = 0; j < sugo.playerList.size() - 1; j++) { // 内周ループ
+
+						/*
+						 * j番目のPlayerインスタンスの変数numとj+1番目の変数numを比較し、 前者の値の方が小さければif文の処理を実行
+						 */
+						if (sugo.playerList.get(j).getNum() < sugo.playerList.get(j + 1).getNum()) {
+
+							// Playerインスタンスを生成。
+							Player temp = new Player("temp");
+							// 変数tempにplayerListに格納されているj番目のPlayerインスタンスを代入
+							temp = sugo.playerList.get(j);
+
+							// playerListのj番目にj+1番目の要素を上書き
+							sugo.playerList.set(j, sugo.playerList.get(j + 1));
+
+							// playerListのj+1番目にtempに入れたj番目のインスタンスを入れる
+							sugo.playerList.set(j + 1, temp);
+							// 上記の処理によりj番目の要素とj+1番目の要素が入れ替わる
+
+						}
+					}
+				}
+
+				System.out.println("順位発表");
+
+				// 参加人数の回数ループさせて順位を表示
+				for (int i = 0; i < sugo.playerList.size(); i++) {
+					System.out.println((i + 1) + "位:" + sugo.playerList.get(i).getName() + ","
+							+ sugo.playerList.get(i).getNum() + "マス");
+				}
 				System.out.println("ゲームを終了しますか");
 				System.out.println("終了する場合は 1 を、続ける場合は 2 を入力してください");
 
@@ -194,7 +226,7 @@ public class SugorokuAnswer5 {
 						System.out.println("1 か 2 を入力してください");
 						continue;
 					} else { // 数字ならさらに分岐
-						
+
 						// 一旦文字を数値に変換して変数reに代入
 						re = Integer.parseInt(input);
 
@@ -210,13 +242,14 @@ public class SugorokuAnswer5 {
 				if (re == 1) { // reが1ならゲーム終了
 					System.out.println("ゲームを終了します");
 					break;
-					
+
 				} else { // reが2なら
 					// countを0に戻す
 					count = 0;
-					
+
 					// playerListの要素を全て削除
 					sugo.playerList.clear();
+					
 					continue;
 				}
 
@@ -224,40 +257,6 @@ public class SugorokuAnswer5 {
 				System.out.println("例外：" + e);
 			}
 		}
-
-		// 二重ループ。 このコードで変数numの大きい順にソート
-		for (int i = 0; i < sugo.playerList.size() - 1; i++) { // 外周ループ
-			for (int j = 0; j < sugo.playerList.size() - 1; j++) { // 内周ループ
-
-				/*
-				 * j番目のPlayerインスタンスの変数numとj+1番目の変数numを比較し、 前者の値の方が小さければif文の処理を実行
-				 */
-				if (sugo.playerList.get(j).getNum() < sugo.playerList.get(j + 1).getNum()) {
-
-					// Playerインスタンスを生成。
-					Player temp = new Player("temp");
-					// 変数tempにplayerListに格納されているj番目のPlayerインスタンスを代入
-					temp = sugo.playerList.get(j);
-
-					// playerListのj番目にj+1番目の要素を上書き
-					sugo.playerList.set(j, sugo.playerList.get(j + 1));
-
-					// playerListのj+1番目にtempに入れたj番目のインスタンスを入れる
-					sugo.playerList.set(j + 1, temp);
-					// 上記の処理によりj番目の要素とj+1番目の要素が入れ替わる
-
-				}
-			}
-		}
-
-		System.out.println("順位発表");
-
-		// 参加人数の回数ループさせて順位を表示
-		for (int i = 0; i < sugo.playerList.size(); i++) {
-			System.out.println(
-					(i + 1) + "位:" + sugo.playerList.get(i).getName() + "," + sugo.playerList.get(i).getNum() + "マス");
-		}
-
 	}
 
 	/**
