@@ -1,4 +1,4 @@
-package common;
+package point;
 
 /**
  * GeneralStaff,ManagementStaffのスーパークラス.
@@ -64,7 +64,7 @@ public class Staff {
 	 * @return String 入力情報
 	 */
 	public String getInformation() {
-		String infomation = this.name +		 this.age + "歳";
+		String infomation = this.name + "\t\t" + this.age + "歳";
 		return infomation;
 		
 	}

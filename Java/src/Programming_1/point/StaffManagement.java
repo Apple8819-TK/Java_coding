@@ -1,8 +1,11 @@
-package common;
+package point;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import common.BusinessException;
+import common.InputData;
+import common.SystemMessage;
 import common.SystemMessage.ID_MESSAGE;
 
 /**
@@ -63,8 +66,8 @@ public class StaffManagement {
 		SystemMessage.outMessage(ID_MESSAGE.N0007);
 
 		// staffListの要素分繰り返し、各インスタンスの情報を表示
-		for (int i = 0; i < staffList.size(); i++) {
-			System.out.println(staffList.get(i).getInformation());
+		for (Staff stf : staffList) {
+			System.out.println(stf.getInformation());
 		}
 	}
 

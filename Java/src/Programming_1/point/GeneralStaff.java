@@ -1,4 +1,4 @@
-package common;
+package point;
 
 /**
  * Staffクラスのサブクラス.
@@ -49,7 +49,7 @@ public class GeneralStaff extends Staff{
 	 * @return String 入力情報
 	 */
 	public String getInformation() {
-		String infomation = this.name + "		" + this.age + "歳" + "		" + this.role;
+		String infomation = this.name + "\t\t" + this.age + "歳" + "\t\t" + this.role;
 		return infomation;
 		
 	}

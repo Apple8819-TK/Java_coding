@@ -1,4 +1,6 @@
-package common;
+package point;
+
+import common.BusinessException;
 
 /**
  * エントリーポイントを持つクラス
