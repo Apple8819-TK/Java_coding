@@ -83,9 +83,6 @@ public class InputData{
                     // 1行入力
                     String inputStr = bufferedReader.readLine();
                     
-                    //意図的にIOExceptionを発生させる
-                    bufferedReader.close();
-                    
                     // 数字を数値に変換
                     int inputInt = Integer.parseInt(inputStr);
                     
@@ -98,6 +95,7 @@ public class InputData{
                     // ***** 例外処理 *****
                 }catch(NumberFormatException objExp){
                     // int変換例外
+                    throw new BusinessException(SystemMessage.getMessage(ID_MESSAGE.E0002));
                 }
             }
         // ***** 例外処理 *****

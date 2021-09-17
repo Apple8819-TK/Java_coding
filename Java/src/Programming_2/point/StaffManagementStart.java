@@ -13,12 +13,16 @@ public class StaffManagementStart {
 	 * 
 	 * @throws BusinessException
 	 */
-	public static void main(String[] args) throws BusinessException {
+	public static void main(String[] args) {
 		
 		// StaffManagementクラスのインスタンスを生成
 		StaffManagement staff = new StaffManagement();
 		// logicMenuメソッドの呼び出し
-		staff.logicMenu();
+		try {
+			staff.logicMenu();
+		} catch (BusinessException e) {
+			e.printStackTrace();
+		}
 
 	}
 
